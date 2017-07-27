@@ -9,7 +9,7 @@ def myview(request):
     rentals = Rental.objects.filter(book=OuterRef('pk'))
     cat_rentals = Rental.objects.filter(book__category=OuterRef('category'))
     count_rentals = rentals.annotate(numrent=Count('*')).values('numrent')
-    count_cat_rentals = cat_rentals.annotate(numcatrent=Count('*', distinct=True)).values('numrent')
+    count_cat_rentals = cat_rentals.annotate(numcatrent=Count('*', distinct=True)).values('numcatrent')
 
     candidates = Book.objects.annotate(
         rentals=Coalesce(Subquery(count_rentals), Value(0)),
